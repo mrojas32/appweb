@@ -1,2 +1,6 @@
-# appweb
-repositorio grupo de trabajo diseño de app web y móviles 2024-1
+# Repositorio Proyecto Diseño de Apps Web y Móviles
+#### Integrantes:
+##### Cristóbal Díaz - Desarrollador
+##### Cristóbal Díaz - Desarrollador
+##### Cristóbal Díaz - Desarrollador
+##### Cristóbal Díaz - Desarrollador
