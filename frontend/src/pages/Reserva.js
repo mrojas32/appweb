@@ -51,7 +51,7 @@ export default function Reserva(){
                     active={stepIndex === 1}
                     completed={stepIndex > 1}
                 >
-                    <StepLabel> Reserva de Hora </StepLabel>
+                    <StepLabel> Seleccion de Hora </StepLabel>
                 </Step>
             </Stepper>
             <div className='flex flex-col gap-3 md:w-[50vw] max-w-lg'>
