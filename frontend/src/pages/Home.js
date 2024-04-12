@@ -11,6 +11,9 @@ export default function Home() {
             <Link to='/canchas'>
                 Canchas
             </Link>
+            <Link to='/reserva'>
+                Reserva
+            </Link>
         </div>
     );
 }
