@@ -4,6 +4,8 @@ import Reserva from "./pages/Reserva";
 import Home from "./pages/Home";
 import Mis_reservas from "./pages/Mis_reservas";
 import Reservas_admin from "./pages/Reservas_admin";
+import Usuario from "./pages/Usuario";
+import Registro from "./pages/Registro"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
@@ -18,6 +20,8 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/mis_reservas' element={<Mis_reservas/>}/>
 		        <Route path='/reservas_admin' element={<Reservas_admin/>}/>
+            <Route path='/usuario' element={<Usuario/>}/>
+            <Route path='/registro' element={<Registro/>}/>
         </Routes>
     </BrowserRouter>
     </div>

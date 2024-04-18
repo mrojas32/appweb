@@ -8,6 +8,12 @@ export default function Home() {
             <Link to='/login'>
                 Login
             </Link>
+            <Link to='/registro'>
+                Registro
+            </Link>
+            <Link to='/usuario'>
+                Usuario
+            </Link>
             <Link to='/canchas'>
                 Canchas
             </Link>
