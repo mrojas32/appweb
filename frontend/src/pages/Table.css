@@ -1,0 +1,24 @@
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #0088fff9;
+  }
+  
+  .styled-table th, .styled-table td {
+    border: 1px solid #0088fff9;
+    padding: 8px;
+  }
+  
+  .styled-table th {
+    background-color: #0088ff84;
+    font-weight: bold;
+  }
+  
+  .styled-table tr:nth-child(even) {
+    background-color: #0088ff84;
+  }
+  
+  .styled-table tr:hover {
+    background-color: #0088ff84;
+  }
+  
