@@ -14,6 +14,12 @@ export default function Home() {
             <Link to='/reserva'>
                 Reserva
             </Link>
+            <Link to='/mis_reservas'>
+                Mis Reservas
+            </Link>
+            <Link to='/reservas_admin'>
+                Administrador de reservas
+            </Link>
         </div>
     );
 }
