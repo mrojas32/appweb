@@ -1,0 +1,13 @@
+create table Usuario(ID_usuario int primary key,
+Nombre TEXT,
+Contraseña TEXT,
+Estudiante BOOLEAN,
+Correo TEXT);
+
+
+INSERT INTO Usuario (ID_usuario, Nombre, Contraseña, Estudiante, Correo)
+VALUES
+    (1, 'Juan Pérez', 'secreto123', TRUE, 'juan.p@usm.cl'),
+    (2, 'María López', 'clave456', FALSE, 'maria.l@usm.cl),
+    (3, 'Pedro Rodríguez', 'password789', TRUE, 'pedro.r@usm.cl');
+    

@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  datamodel_db:
+
+services:
+  main_datamodel:
+    image: "mysql"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=password123"
+      - "MYSQL_USER=admin"
+      - "MYSQL_PASSWORD=password123"
+      - "MYSQL_DATABASE=canchas_datamodel"
+    volumes:
+      - ./db_init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
