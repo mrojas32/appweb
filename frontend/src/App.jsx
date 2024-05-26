@@ -8,13 +8,15 @@ import Mis_reservas from "./pages/Mis_reservas";
 import Reservas_admin from "./pages/Reservas_admin";
 import Usuario from "./pages/Usuario";
 import Registro from "./pages/Registro"
+import Navbar from './Navbar';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 function App() {
-  return (
+    return (
     <div className='flex flex-col w-full h-screen items-center p-3'>
-    <BrowserRouter>
+        <BrowserRouter>
+        <Navbar/>
         <Routes>
             <Route path='' element={<Home/>}/>
             <Route path='/canchas' element={<Canchas/>}/>

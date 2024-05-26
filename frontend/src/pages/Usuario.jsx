@@ -1,7 +1,6 @@
+import React from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useState } from "react"
-import { Route, Routes } from 'react-router-dom';
-import { Navbar } from '../Navbar';
 
 export default function Usuario() {
   const [userName, setUserName] = useState('Juanito'); // Nombre de usuario inicial
@@ -9,9 +8,6 @@ export default function Usuario() {
 
   return (
     <>
-    <Routes>
-        <Route path='/' element={<Navbar />}></Route>
-    </Routes>
       <div>
         <Button variant='outlined' color='primary' onClick={() => setDialogOpen(true)}>
                 Eliminar Usuario
