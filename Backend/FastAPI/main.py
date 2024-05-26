@@ -5,7 +5,6 @@ import crud_user
 from database import engine, localSession
 from schemas import UsuarioData, UsuarioID, AdministradorID, ReservaID, ReservaData, AdministradorData, CanchasID
 from models import Base
-from datetime import date
 
 Base.metadata.create_all(bind=engine)
 
@@ -124,7 +123,7 @@ def  get_reservas_by_cancha(id, db: Session = Depends(get_db)):
         return reservas_by_cancha
     raise HTTPException(status_code=404, detail='Admin not Found')
 
-@app.get('/api/reservas/{fecha:date}', response_model=AdministradorID)
+@app.get('/api/reservas/{fecha:str}', response_model=AdministradorID)
 def get_reservas_by_date(fecha, db: Session = Depends(get_db)):
     reservas_by_date = crud_user.get_reservas_by_date(db=db, fecha=fecha)
     if reservas_by_date:
