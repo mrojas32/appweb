@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime
+
 
 class UsuarioData(BaseModel):
     nombre: str
@@ -12,7 +12,7 @@ class AdministradorData(BaseModel):
     passwd: str
 
 class ReservaData(BaseModel):
-    fecha: datetime
+    fecha: str
     bloq_ini: str
     bloq_final: str
     ID_usuario: int
