@@ -1,12 +1,14 @@
-from sqlalchemy import Column, String, Integer, Date, ForeignKey
+from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean,VARCHAR
 
 from database import Base
 
 class Usuario(Base):
     __tablename__ = 'Usuario'
     ID_usuario = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String(255), index=True, unique=True)
-    passwd = Column(String(255))
+    nombre = Column(VARCHAR(255), index=True, unique=True)
+    passwd = Column(VARCHAR(255))
+    estudiante = Column(Boolean)
+    correo = Column(VARCHAR(255))
 
 class Canchas(Base):
     __tablename__ = 'Canchas'
