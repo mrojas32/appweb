@@ -1,2 +1,5 @@
 uvicorn
 fastapi
+aqlalchemy
+pymysql
+cryptography
