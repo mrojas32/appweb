@@ -31,19 +31,18 @@ VALUES
 CREATE TABLE IF NOT EXISTS Reserva (
   ID_reserva INT AUTO_INCREMENT  PRIMARY KEY,
   fecha DATE,
-  bloq_ini VARCHAR(10),
-  bloq_final VARCHAR(10),
+  bloq VARCHAR(10),
   ID_usuario INT,
   ID_canchas INT,
   FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario),
   FOREIGN KEY (ID_canchas) REFERENCES Canchas(ID_canchas)
 );
 
-INSERT INTO Reserva (ID_reserva, fecha, bloq_ini, bloq_final, ID_Usuario, ID_canchas)
+INSERT INTO Reserva (ID_reserva, fecha, bloq, ID_Usuario, ID_canchas)
 VALUES
-    (1, '2024-05-25', '09:00', '10:30', 1, 1),
-    (2, '2024-05-26', '14:00', '15:30', 2, 2),
-    (3, '2024-05-27', '18:00', '19:30', 3, 3);
+    (1, '2024-05-25', '09:00', 1, 1),
+    (2, '2024-05-26', '14:00', 2, 2),
+    (3, '2024-05-27', '18:00', 3, 3);
 
 CREATE TABLE IF NOT EXISTS Administrador (
     ID_admin INT AUTO_INCREMENT  PRIMARY KEY,

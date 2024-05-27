@@ -27,8 +27,7 @@ class Reserva(Base):
     __tablename__ = 'Reserva'
     ID_reserva = Column(Integer, primary_key=True, index=True)
     fecha = Column(Date)
-    bloq_ini = Column(String(10))
-    bloq_final = Column(String(10))
+    bloq = Column(String(10))
     ID_usuario = Column(Integer, ForeignKey("Usuario.ID_usuario"), index=True)
     ID_canchas = Column(Integer, ForeignKey("Canchas.ID_canchas"), index=True)
 

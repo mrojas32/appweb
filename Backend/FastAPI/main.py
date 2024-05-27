@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 import crud
 from database import engine, localSession
-from schemas import UsuarioData, UsuarioID, AdministradorID, ReservaID, ReservaData, AdministradorData, CanchasID
+from schemas import *
 from models import Base
 
 Base.metadata.create_all(bind=engine)
@@ -70,6 +70,12 @@ def update_nom_user(new_passwd, nombre, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=400, detail='User dont exist')
 
+
+
+
+
+
+
 ###########################################
 ## Canchas
 
@@ -95,64 +101,64 @@ def get_cancha_by_name(nombre, db: Session = Depends(get_db)):
 
 
 
+
+
+
 ###########################################
 ## Reservas
 
-@app.get('/api/reservas', response_model = list[AdministradorID])
+@app.get('/api/reservas', response_model = list[ReservaID])
 def get_reservas(db: Session = Depends(get_db)):
     return crud.get_reservas(db=db)
 
-@app.get('/api/reservas/{id:int}', response_model=AdministradorID)
+@app.get('/api/reservas/{id:int}', response_model=ReservaID)
 def get_reserva(id, db: Session = Depends(get_db)):
     reservas_by_id = crud.get_reservas_by_id(db=db, id=id)
     if reservas_by_id:
         return reservas_by_id
-    raise HTTPException(status_code=404, detail='Admin not Found')
+    raise HTTPException(status_code=404, detail='Reserva not Found')
 
-@app.get('/api/reservas/{id:int}', response_model=AdministradorID)
+@app.get('/api/reservas/{id:int}', response_model=ReservaID)
 def get_reservas_by_id_usuario(id, db: Session = Depends(get_db)):
     reservas_by_id_usuario = crud.get_reservas_by_id_usuario(db=db, id=id)
     if reservas_by_id_usuario:
         return reservas_by_id_usuario
-    raise HTTPException(status_code=404, detail='Admin not Found')
+    raise HTTPException(status_code=404, detail='Reserva not Found')
 
-@app.get('/api/reservas/{id:int}', response_model=AdministradorID)
+@app.get('/api/reservas/{id:int}', response_model=ReservaID)
 def  get_reservas_by_cancha(id, db: Session = Depends(get_db)):
     reservas_by_cancha = crud.get_reservas_by_cancha(db=db, id=id)
     if reservas_by_cancha:
         return reservas_by_cancha
-    raise HTTPException(status_code=404, detail='Admin not Found')
+    raise HTTPException(status_code=404, detail='Reserva not Found')
 
-@app.get('/api/reservas/{fecha:str}', response_model=AdministradorID)
+@app.get('/api/reservas/{fecha:str}', response_model=ReservaID)
 def get_reservas_by_date(fecha, db: Session = Depends(get_db)):
     reservas_by_date = crud.get_reservas_by_date(db=db, fecha=fecha)
     if reservas_by_date:
         return reservas_by_date
     raise HTTPException(status_code=404, detail='Reserva not Found')
 
-#@app.get('/api/reservas/{fecha:date}', response_model=AdministradorID)
-#def get_user_by_date_bloq_ini(fecha, db: Session = Depends(get_db)):
-#    reservas_by_date_bloq_ini = crud.get_user_by_date_bloq_ini(db=db, fecha=fecha)
-#    if reservas_by_date_bloq_ini:
-#       return reservas_by_date_bloq_ini
-#   raise HTTPException(status_code=404, detail='Reserva not Found')
+#@app.get('/api/reservas/{fecha:str, bloq:str}', response_model=ReservaID)
+#def get_user_by_date_bloq(fecha, bloq, db: Session = Depends(get_db)):
+#    reservas_by_date_bloq = crud.get_user_by_date_bloq(db=db, fecha=fecha, bloq=bloq)
+#    if reservas_by_date_bloq:
+#       return reservas_by_date_bloq
+#    raise HTTPException(status_code=404, detail='Reserva not Found')
 
 
 
 @app.post('/api/reservas/', response_model=ReservaID)
-def create_reserva(reserva: ReservaData, db: Session = Depends(get_db)):
-    check_name = crud.get_reserva_by_cancha(db=db, id=id)
-    if check_name:
-        raise HTTPException(status_code=400, detail='Reserva already exits')
+def create_reserva(reserva: ReservaPost, db: Session = Depends(get_db)):
     return crud.create_reserva(db=db, reserva=reserva)
 
-@app.delete('/api/delete_reserva/{nombre: str}', response_model=ReservaID)
-def delete_reserva_by_cancha(nombre, db: Session = Depends(get_db)):
-    check_name = crud.get_reserva_by_cancha(db=db, id=id)
+@app.delete('/api/delete_reserva/{ID_reserva:int}', response_model=ReservaID)
+def delete_reservas_by_id(ID_reserva, db: Session = Depends(get_db)):
+    check_name = crud.get_reservas_by_id(db=db, id=ID_reserva)
     if check_name:
-        return crud.delete_reserva_by_cancha(db=db, admin=check_name)
+        return crud.delete_reserva(db=db, reserva = check_name)
     else:
-        raise HTTPException(status_code=400, detail='Admin dont exist')
+        raise HTTPException(status_code=400, detail='Reserva dont exist')
 
 
 
@@ -198,9 +204,10 @@ def delete_admin(nombre, db: Session = Depends(get_db)):
 def update_nom_user(new_nombre, nombre, db: Session = Depends(get_db)):
     check_name = crud.get_admin_by_name(db=db, nombre=nombre)
     if check_name:
-        return crud.update_admin_name(db=db, user=check_name,nombre=new_nombre)
+        return crud.update_admin_name(db=db, admin=check_name,nombre=new_nombre)
     else:
         raise HTTPException(status_code=400, detail='Admin dont exist')
+
 
 @app.put('/api/update_nom_admin/{new_passwd:str , nombre:str}', response_model = str)
 def update_nom_admin(new_passwd, nombre, db: Session = Depends(get_db)):
