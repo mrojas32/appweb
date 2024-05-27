@@ -5,13 +5,13 @@ const Navbar = () => {
 
 	return (
 		<>
-			<header>
+			<header style={{height:'.5em'}}>
 				<h1>
 					<Link to='/'>HOME   </Link>
 				</h1>
 
-					<div className='user'>
-						<span className='username'>     juanito     </span>
+					<div>
+						<span>     juanito     </span>
                         <Link to='/'>   Cerrar Sesión</Link>
 					</div>
 

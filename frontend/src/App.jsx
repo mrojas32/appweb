@@ -9,12 +9,13 @@ import Reservas_admin from "./pages/Reservas_admin";
 import Usuario from "./pages/Usuario";
 import Registro from "./pages/Registro"
 import Navbar from './Navbar';
+import './index.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 function App() {
     return (
-    <div className='flex flex-col w-full h-screen items-center p-3'>
+    <div className='flex flex-col w-full h-screen items-center p-3 max-w-[300px]'>
         <BrowserRouter>
         <Navbar/>
         <Routes>
