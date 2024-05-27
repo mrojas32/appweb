@@ -12,7 +12,7 @@ class Usuario(Base):
 
 class Canchas(Base):
     __tablename__ = 'Canchas'
-    c = Column(Integer, primary_key=True, index=True)
+    ID_canchas = Column(Integer, primary_key=True, index=True)
     nombre = Column(String(255), index=True, unique=True)
     tipo = Column(String(255))
     ubicacion = Column(String(255))
