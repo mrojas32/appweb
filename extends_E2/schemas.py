@@ -33,4 +33,4 @@ class ReservaID(ReservaData):
     ID_reserva : int
 
 class CanchasID(CanchasData):
-    c : int
+    ID_canchas : int
