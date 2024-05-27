@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 
-from sqlalchemy import delete, update
+from sqlalchemy import delete, update, and_
 
-from models import Usuario, Canchas, Administrador, Reserva
-from schemas import UsuarioData, AdministradorData, ReservaData, UsuarioID
+from models import *
+from schemas import *
 
 def get_users(db: Session):
     return db.query(Usuario).all()
@@ -22,7 +22,7 @@ def create_user(db: Session, user: UsuarioData):
     return new_user
 
 def get_user_by_name_passwd(db: Session, nombre :str, passwd: str):
-    return db.query(Usuario).filter(Usuario.nombre == nombre and Usuario.passwd == passwd).first()
+    return db.query(Usuario).filter( and_(Usuario.nombre == nombre, Usuario.passwd == passwd)).first()
 
 def delete_user_by_name(db: Session, user: Usuario):
     db.delete(user)
@@ -50,10 +50,11 @@ def get_cancha(db: Session):                                         #ok
     return db.query(Canchas).all()
 
 def get_cancha_by_id(db: Session, id :int):
-    return db.query(Canchas).filter(Canchas.c == id).first()   #IDCANCHA = c            #ok
+    return db.query(Canchas).filter(Canchas.ID_canchas == id).first()  
 
 def get_cancha_by_name(db: Session, nombre :str):
     return db.query(Canchas).filter(Canchas.nombre == nombre).first()
+
 
 #def get_cancha_by_type_ubication(db: Session, tipo :str, ubicacion: str):
 #   return db.query(Canchas).filter(Canchas.tipo == tipo and Canchas.ubicacion == ubicacion).first()
@@ -78,20 +79,20 @@ def get_reservas_by_id(db: Session, id :int):
 def get_reservas_by_date(db: Session, fecha :str):                                #ok
     return db.query(Reserva).filter(Reserva.fecha == fecha).first()
 
-#def get_user_by_date_bloq_ini(db: Session, fecha :str, bloq_ini: str):                                   #
-#    return db.query(Reserva).filter(Reserva.fecha == fecha and Reserva.bloq_ini == bloq_ini).first()
+#def get_user_by_date_bloq(db: Session, fecha :str, bloq: str):                                   #
+#    return db.query(Reserva).filter(and_(Reserva.fecha == fecha, Reserva.bloq == bloq) ).first()
 
 
 
-def create_reserva(db: Session, reserva: ReservaData):
-    new_reseva = Reserva(fecha = reserva.fecha, bloq_ini = reserva.bloq_ini)
+def create_reserva(db: Session, reserva: ReservaPost):
+    new_reseva = Reserva(fecha = date.fromisoformat(reserva.fecha) , bloq = reserva.bloq, ID_usuario=reserva.ID_usuario, ID_canchas = reserva.ID_canchas)
     db.add(new_reseva)
     db.commit()
     db.flush(new_reseva)
     return new_reseva
 
 
-def delete_reserva_by_name(db: Session, reserva: Reserva):
+def delete_reserva(db: Session, reserva: Reserva):
     db.delete(reserva)
     db.commit()
     db.flush()
@@ -131,6 +132,7 @@ def update_admin_name(db: Session, admin: Administrador, nombre:str):
     db.commit()
     db.flush()
     return "Cambio realizado"
+
 
 def update_admin_passwd(db: Session, admin: Administrador, passwd:str):
     db.execute(update(Administrador).where(Administrador.ID_admin == admin.ID_admin).values(passwd = passwd))
