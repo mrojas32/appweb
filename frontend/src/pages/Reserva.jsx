@@ -28,6 +28,38 @@ export default function Reserva(){
         setStepIndex(2);
     };
 
+    const handleReservation = () => {
+        fetch('http://127.0.0.1:8000/api/reservas/', {
+            method: 'POST',
+            mode: 'cors', // Required for cross-origin requests
+            headers: {
+                'Content-Type': 'application/json',
+                // Allow requests from all origins
+                'Access-Control-Allow-Origin': '*',
+                // Include any other headers you need
+            },
+            body: JSON.stringify({
+                fecha: fecha,
+                bloq: hora,
+                ID_usuario: 1,
+                ID_canchas: 1
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    }
+
     useEffect( () => {
         setHoras(DUMMY_HORAS);
     }, []);
@@ -37,7 +69,10 @@ export default function Reserva(){
     }, [stepIndex])
     
     return (
-        <div className='flex flex-col mt-[10vh] gap-8 justify-center'>
+        <div className='flex' style={{justifyContent:'center'}}>
+            <div className='flex flex-col mt-[10vh] gap-8 justify-center'
+                style={{width:'350px'}}
+            >
             <Stepper activeStep={STEPS[stepIndex]}>
                 <Step
                     key={STEPS[0]}
@@ -116,13 +151,14 @@ export default function Reserva(){
                             <Button
                                 variant='contained'
                                 color='success'
-                                onClick={() => alert('agendar hora')}
+                                onClick={handleReservation}
                             >
                                 Confirmar
                             </Button>
                         </div>
                     )
                 }
+            </div>
             </div>
         </div>
     );
