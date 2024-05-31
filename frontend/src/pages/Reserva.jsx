@@ -31,12 +31,10 @@ export default function Reserva(){
     const handleReservation = () => {
         fetch('http://127.0.0.1:8000/api/reservas/', {
             method: 'POST',
-            mode: 'cors', // Required for cross-origin requests
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                // Allow requests from all origins
                 'Access-Control-Allow-Origin': '*',
-                // Include any other headers you need
             },
             body: JSON.stringify({
                 fecha: fecha,
@@ -70,9 +68,7 @@ export default function Reserva(){
     
     return (
         <div className='flex' style={{justifyContent:'center'}}>
-            <div className='flex flex-col mt-[10vh] gap-8 justify-center'
-                style={{width:'350px'}}
-            >
+            <div className='flex flex-col mt-3 gap-8 justify-center'>
             <Stepper activeStep={STEPS[stepIndex]}>
                 <Step
                     key={STEPS[0]}

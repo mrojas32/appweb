@@ -1,4 +1,3 @@
-import DataTable from "react-data-table-component";
 import {useState, useEffect} from 'react'
 import React from 'react';
 import './Table.css'; // Importar el archivo CSS para los estilos

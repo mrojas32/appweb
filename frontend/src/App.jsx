@@ -15,7 +15,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
     return (
-    <div className='flex flex-col w-full h-screen items-center p-3 max-w-[300px]'>
+    <div className='flex flex-col w-full h-screen items-center'>
         <BrowserRouter>
         <Navbar/>
         <Routes>
