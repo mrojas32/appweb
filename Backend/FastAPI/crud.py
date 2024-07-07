@@ -24,6 +24,9 @@ def create_user(db: Session, user: UsuarioData):
 def get_user_by_name_passwd(db: Session, nombre :str, passwd: str):
     return db.query(Usuario).filter( and_(Usuario.nombre == nombre, Usuario.passwd == passwd)).first()
 
+def get_user_by_correo(db: Session, correo :str):
+    return db.query(Usuario).filter(Usuario.correo == correo).first()
+
 def delete_user_by_name(db: Session, user: Usuario):
     db.delete(user)
     db.commit()
