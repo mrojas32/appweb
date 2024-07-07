@@ -17,17 +17,16 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         with Session(engine) as db:
             user_id = payload.get('id')
             user = db.get_one(Usuario, user_id)
-            print(f'retrieved user: {user.username}')
-    except Exception:
+    except Exception as e:
+        print(repr(e))
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Invalid token'
         )
 
     return UserSessionDto(
-        id=user.id,
-        username=user.username
+        id=user_id,
+        username=str(user.correo)
     )
-
 
 session_middleware = Depends(get_current_user)
