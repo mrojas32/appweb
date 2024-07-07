@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link,Outlet,} from 'react-router-dom';
+import { resetSession } from './dataModel/Session';
+
 
 const Navbar = () => {
 
@@ -12,7 +14,7 @@ const Navbar = () => {
 
             <div className='flex gap-5'>
                 <span>     juanito     </span>
-                <Link to='/'>   Cerrar Sesión</Link>
+                <Link onClick={resetSession} to='/'>   Cerrar Sesión</Link>
             </div>
 
         </div>

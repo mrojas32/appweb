@@ -4,6 +4,11 @@ from datetime import date
 
 #date_object = datetime.fromisoformat('2024-10-27')
 
+class UserSessionDto(BaseModel):
+    id: int
+    username: str
+
+
 class UsuarioData(BaseModel):
     nombre: str
     passwd: str

@@ -1,11 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+import jwt
 
 import crud
 from database import engine, localSession
 from schemas import *
 from models import Base
+from session_middleware import session_middleware, JWT_SECRET
 
 Base.metadata.create_all(bind=engine)
 
@@ -29,6 +32,42 @@ def get_db():
 @app.get('/')
 def root():
     return 'Hola mundo'
+
+@app.get('/api/auth')
+def get_session(user=session_middleware):
+    return {
+        'user': user
+    }
+
+@app.post('/api/auth')
+def login(
+            form_data: OAuth2PasswordRequestForm = Depends(),
+            db: Session = Depends(get_db)
+        ):
+    print('login', form_data.username, form_data.password)
+    user = crud.get_user_by_correo(db=db, correo=form_data.username)
+    if (not user):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='invalid credentials'
+        )
+    
+    valid_credentials = str(user.passwd) == form_data.password
+
+    if (valid_credentials):
+        token = jwt.encode({
+            'id': user.ID_usuario,
+            'username': user.correo
+        }, JWT_SECRET)
+        return {
+            'access_token': token,
+            'token_type': 'bearer'
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='invalid credentials'
+        )
 
 @app.get('/api/users', response_model = list[UsuarioID])
 def get_users(db: Session = Depends(get_db)):
@@ -72,7 +111,7 @@ def update_nom_user(new_nombre, nombre, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail='User dont exist')
 
 @app.put('/api/update_psw_user/{new_passwd:str , nombre:str}', response_model = str)
-def update_nom_user(new_passwd, nombre, db: Session = Depends(get_db)):
+def update_pw_user(new_passwd, nombre, db: Session = Depends(get_db)):
     check_name = crud.get_user_by_name(db=db, nombre=nombre)
     if check_name:
         return crud.update_user_passwd(db=db, user=check_name, passwd=new_passwd)
@@ -210,7 +249,7 @@ def delete_admin(nombre, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail='Admin dont exist')
 
 @app.put('/api/update_nom_admin/{new_nombre:str , nombre:str}', response_model = str)
-def update_nom_user(new_nombre, nombre, db: Session = Depends(get_db)):
+def update_nom_admin(new_nombre, nombre, db: Session = Depends(get_db)):
     check_name = crud.get_admin_by_name(db=db, nombre=nombre)
     if check_name:
         return crud.update_admin_name(db=db, admin=check_name,nombre=new_nombre)
@@ -218,8 +257,8 @@ def update_nom_user(new_nombre, nombre, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail='Admin dont exist')
 
 
-@app.put('/api/update_nom_admin/{new_passwd:str , nombre:str}', response_model = str)
-def update_nom_admin(new_passwd, nombre, db: Session = Depends(get_db)):
+@app.put('/api/update_pw_admin/{new_passwd:str , nombre:str}', response_model = str)
+def update_pw_admin(new_passwd, nombre, db: Session = Depends(get_db)):
     check_name = crud.get_admin_by_name(db=db, nombre=nombre)
     if check_name:
         return crud.update_admin_passwd(db=db, admin=check_name, passwd=new_passwd)
