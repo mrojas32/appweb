@@ -9,6 +9,7 @@ fastapi = "*"
 sqlalchemy = "*"
 pymysql = "*"
 cryptography = "*"
+pyjwt = "*"
 
 [dev-packages]
 

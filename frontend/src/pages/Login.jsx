@@ -1,11 +1,23 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import { useState } from "react"
+import { useState } from "react";
+import { apiWrapper } from '../libs/fetchWrappers/apiFetch';
+import { setToken } from '../dataModel/Session';
 
 export default function Login() {
     
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [dialogOpen, setDialogOpen] = useState('');
+
+
+    const handleLogin = () => {
+        const params = new URLSearchParams();
+        params.append('username', username);
+        params.append('password', password);
+        apiWrapper.post('/auth', params
+            ).then(resp => {
+                setToken(resp.access_token);
+            }).catch( err => console.log(err) );
+    }
 
     return (
         <div className='flex flex-col gap-3 max-w-md bg-slate-900 rounded p-5 mt-20'>
@@ -21,19 +33,9 @@ export default function Login() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
             />
-            <Button variant='outlined' color='primary' onClick={() => setDialogOpen(true)}>
+            <Button variant='outlined' color='primary' onClick={handleLogin}>
                 Entrar
             </Button>
-
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-                <DialogTitle> Titulo </DialogTitle>
-                <DialogContent> Dialog content here... </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDialogOpen(false)}>
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </div>
     )
 }
